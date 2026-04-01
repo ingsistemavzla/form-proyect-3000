@@ -5,28 +5,40 @@ import { cn } from '@/utils/cn'
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xvzvqjbb'
 
-const ARCHETYPES = ['Producto', 'Servicio', 'Experiencia'] as const
+const ACTIVITY_OPTIONS = [
+  'Servicios Profesionales (Asesoría, Salud, Freelance)',
+  'Venta de Productos (Tienda, E-commerce, Catálogo)',
+  'Negocio Local (Restaurante, Estética, Taller)',
+] as const
+
+const fieldClass =
+  'rounded-[12px] border-gray-300 shadow-sm transition-all hover:border-coach-500/40 focus:border-coach-700 focus:ring-coach-700'
 
 export function ContactForm() {
+  const [clientName, setClientName] = useState('')
   const [businessName, setBusinessName] = useState('')
-  const [archetype, setArchetype] = useState<string>('')
+  const [activity, setActivity] = useState<string>('')
   const [valueProposition, setValueProposition] = useState('')
   const [email, setEmail] = useState('')
   const [whatsapp, setWhatsapp] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [submitted, setSubmitted] = useState(false)
+  const [successName, setSuccessName] = useState('')
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus('loading')
 
+    const trimmedName = clientName.trim()
+
     const data = new FormData()
+    data.append('client_name', trimmedName)
     data.append('business_name', businessName.trim())
-    data.append('archetype', archetype)
+    data.append('activity', activity)
     data.append('value_proposition', valueProposition.trim())
     data.append('email', email.trim())
     data.append('whatsapp', whatsapp.trim())
-    data.append('_subject', 'Proyecto 3000 — Misión Celia Delgado')
+    data.append('_subject', 'Proyecto 3000 — Gabriel Delgado')
 
     try {
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -36,6 +48,7 @@ export function ContactForm() {
       })
 
       if (res.status === 200 || res.ok) {
+        setSuccessName(trimmedName)
         setSubmitted(true)
         setStatus('idle')
         return
@@ -49,58 +62,72 @@ export function ContactForm() {
   if (submitted) {
     return (
       <div
-        className="sm:rounded-2xl p-6 sm:p-8 md:p-10 border-2 border-emerald-200 sm:shadow-lg bg-gradient-to-br from-emerald-50/90 to-white"
+        className="rounded-[15px] border-2 border-[#00c853]/85 bg-gradient-to-br from-emerald-50/95 to-white p-6 shadow-coach-md sm:p-8 md:p-10"
         role="status"
         aria-live="polite"
       >
-        <p className="text-lg sm:text-xl text-neutral-800 leading-relaxed font-medium text-center max-w-2xl mx-auto">
-          ¡Datos recibidos, Francisco! Tu cupo está pre-reservado. Te contactaré por WhatsApp en breve para confirmar el pago y comenzar.
+        <p className="mx-auto max-w-2xl text-center text-lg font-semibold leading-relaxed text-neutral-800 sm:text-xl">
+          ¡Gracias, {successName}! Tus datos han sido recibidos correctamente. Tu cupo para el Proyecto 3000 está pre-reservado. Me pondré en contacto contigo
+          por WhatsApp en breve para los detalles finales.
         </p>
       </div>
     )
   }
 
   return (
-    <div className="bg-white sm:rounded-2xl p-4 sm:p-6 md:p-8 border-2 border-neutral-200 sm:shadow-lg">
-      <h2 className="text-lg sm:text-2xl font-black text-primary-800 mb-2 border-b-2 border-primary-600 pb-2">
-        Reserva tu cupo
+    <div className="rounded-[15px] border border-neutral-200/90 bg-white p-4 shadow-coach sm:p-6 md:p-8">
+      <h2 className="font-display relative mb-2 border-b-4 border-coach-700 pb-3 text-xl font-black text-coach-900 sm:text-2xl">
+        Pre-calificación técnica
       </h2>
-      <p className="text-sm sm:text-base text-neutral-600 mb-6 leading-relaxed">
-        Cuéntanos sobre tu negocio y cómo quieres que te encuentre tu audiencia. Con estos datos preparo tu propuesta y el siguiente paso por WhatsApp.
+      <p className="mb-6 text-sm leading-relaxed text-neutral-600 sm:text-base">
+        Unos datos concretos bastan para ver si tu proyecto encaja y preparar una respuesta clara. Te escribo por correo o WhatsApp con el siguiente paso.
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5 [&_label]:font-semibold [&_label]:text-neutral-800">
+        <Input
+          name="client_name"
+          type="text"
+          label="¿Cómo te llamas?"
+          placeholder="Tu nombre"
+          required
+          autoComplete="name"
+          value={clientName}
+          onChange={(e) => setClientName(e.target.value)}
+          className={fieldClass}
+        />
+
         <Input
           name="business_name"
           type="text"
-          label="Nombre del negocio o marca"
-          placeholder="Ej. Café Aurora"
+          label="Nombre de tu empresa o proyecto"
+          placeholder="Marca, razón social o nombre del proyecto"
           required
           autoComplete="organization"
           value={businessName}
           onChange={(e) => setBusinessName(e.target.value)}
+          className={fieldClass}
         />
 
         <div className="w-full">
-          <label htmlFor="archetype" className="block text-sm font-medium text-gray-700 mb-1.5">
-            Arquetipo
+          <label htmlFor="activity" className="mb-1.5 block text-sm font-semibold text-neutral-800">
+            ¿A qué se dedica tu negocio?
           </label>
           <select
-            id="archetype"
-            name="archetype"
+            id="activity"
+            name="activity"
             required
-            value={archetype}
-            onChange={(e) => setArchetype(e.target.value)}
+            value={activity}
+            onChange={(e) => setActivity(e.target.value)}
             className={cn(
-              'w-full px-4 py-2 border rounded-lg transition-colors bg-white',
-              'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
-              'border-gray-300'
+              'w-full border bg-white px-4 py-2 text-neutral-800',
+              fieldClass,
+              'focus:outline-none focus:ring-2'
             )}
           >
             <option value="" disabled>
-              Selecciona una opción
+              Elige la opción que mejor encaje
             </option>
-            {ARCHETYPES.map((opt) => (
+            {ACTIVITY_OPTIONS.map((opt) => (
               <option key={opt} value={opt}>
                 {opt}
               </option>
@@ -109,8 +136,8 @@ export function ContactForm() {
         </div>
 
         <div className="w-full">
-          <label htmlFor="value_proposition" className="block text-sm font-medium text-gray-700 mb-1.5">
-            Propuesta de valor
+          <label htmlFor="value_proposition" className="mb-1.5 block text-sm font-semibold text-neutral-800">
+            ¿Cuál es el objetivo principal de tu nueva web?
           </label>
           <textarea
             id="value_proposition"
@@ -120,11 +147,11 @@ export function ContactForm() {
             value={valueProposition}
             onChange={(e) => setValueProposition(e.target.value)}
             className={cn(
-              'w-full px-4 py-2 border rounded-lg transition-colors resize-y min-h-[120px]',
-              'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent',
-              'border-gray-300'
+              'w-full resize-y border px-4 py-2 text-neutral-800',
+              fieldClass,
+              'min-h-[120px] focus:outline-none focus:ring-2'
             )}
-            placeholder="¿Qué ofreces, a quién ayudas y qué te hace distinto?"
+            placeholder="Ej. captar leads, vender online, reservas, credibilidad profesional…"
           />
         </div>
 
@@ -137,6 +164,7 @@ export function ContactForm() {
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className={fieldClass}
         />
 
         <Input
@@ -148,14 +176,26 @@ export function ContactForm() {
           autoComplete="tel"
           value={whatsapp}
           onChange={(e) => setWhatsapp(e.target.value)}
+          className={fieldClass}
         />
 
         <div className="flex flex-col gap-3 pt-2">
-          <Button type="submit" variant="primary" size="lg" disabled={status === 'loading'} className="sm:w-fit sm:min-w-[200px]">
-            {status === 'loading' ? 'Enviando…' : 'Enviar y pre-reservar cupo'}
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            disabled={status === 'loading'}
+            className={cn(
+              'font-display w-full font-bold shadow-coach-sm transition-all sm:w-fit sm:min-w-[220px]',
+              'rounded-[25px] bg-gradient-to-br from-coach-700 to-coach-900 hover:opacity-95',
+              'hover:-translate-y-0.5 hover:shadow-coach-md focus:ring-coach-800',
+              'disabled:hover:translate-y-0 disabled:hover:opacity-50'
+            )}
+          >
+            {status === 'loading' ? 'Enviando…' : 'Enviar solicitud'}
           </Button>
           {status === 'error' && (
-            <p className="text-sm font-medium text-red-600" role="alert">
+            <p className="text-sm font-semibold text-alert" role="alert">
               No se pudo enviar. Inténtalo de nuevo en unos minutos.
             </p>
           )}

@@ -7,6 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* Paleta “coach digital” / confianza (Material blues + acentos) */
+        coach: {
+          light: '#e3f2fd',
+          100: '#bbdefb',
+          400: '#42a5f5',
+          500: '#2196f3',
+          600: '#1e88e5',
+          700: '#1976d2',
+          800: '#1565c0',
+          900: '#0d47a1',
+        },
+        solution: '#00c853',
+        alert: '#d32f2f',
         primary: {
           50: '#E6F2FF',
           100: '#CCE5FF',
@@ -45,7 +58,13 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["'Segoe UI'", 'Tahoma', 'Geneva', 'Verdana', 'sans-serif'],
+        sans: ['"Open Sans"', 'Segoe UI', 'system-ui', 'sans-serif'],
+        display: ['Montserrat', 'Segoe UI', 'system-ui', 'sans-serif'],
+      },
+      boxShadow: {
+        coach: '0 10px 30px rgba(0,0,0,0.2)',
+        'coach-sm': '0 2px 4px rgba(0,0,0,0.1)',
+        'coach-md': '0 4px 8px rgba(0,0,0,0.1)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
