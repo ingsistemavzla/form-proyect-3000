@@ -691,9 +691,9 @@
         <div class="purpose-box">
             <lord-icon src="https://cdn.lordicon.com/yaogxvnw.json" trigger="loop" colors="primary:#ffb347" style="width:36px;height:36px"></lord-icon>
             <div>
-                <strong>🎯 Esta iniciativa tiene un solo objetivo:</strong> financiar mediante mi trabajo profesional una intervención médica urgente para mi abuela.<br>
-                Cada línea de código y cada arquitectura desplegada se traduce directamente en salud para mi familia.<br>
-                <strong style="margin-top: 6px; display: inline-block;">Busco 30 clientes que valoren el compromiso de un ingeniero que trabaja por lo más importante.</strong>
+                <strong>🎯 Propósito de esta iniciativa:</strong> orientar los ingresos de mi actividad profesional hacia una intervención médica prioritaria para mi abuela.<br>
+                Cada encargo técnico asumido representa, para mi familia, un aporte concreto a su atención de salud.<br>
+                <strong style="margin-top: 6px; display: inline-block;">Ofrezco un máximo de treinta plazas, con el rigor y el respeto que merece quien confía la presencia digital de su organización o proyecto.</strong>
             </div>
         </div>
 
@@ -715,10 +715,10 @@
         <div class="form-body">
             <div class="section-title">
                 <lord-icon src="https://cdn.lordicon.com/wxnxiano.json" trigger="loop" colors="primary:#1976d2" style="width:22px;height:22px"></lord-icon>
-                Pre-calificación técnica
+                Requerimientos del proyecto
             </div>
             <p style="font-size: 0.8rem; color: #475569; margin-bottom: 1.5rem;">
-                Unos datos concretos bastan para ver si tu proyecto encaja y preparar una respuesta clara. Te escribo por correo o WhatsApp con el siguiente paso.
+                Cada paso documenta aspectos de su solicitud. Puede avanzar con calma; al enviar el formulario, recibirá contacto por correo o WhatsApp para los trámites posteriores.
             </p>
 
             <form id="leadForm">

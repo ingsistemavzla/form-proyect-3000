@@ -6,7 +6,7 @@ import { Crosshair, Target, Zap } from 'lucide-react'
 
 const PAGE_TITLE = 'Gabriel Delgado | Consultoría de Software de Alto Rendimiento'
 const PAGE_DESCRIPTION =
-  'Ingeniería real, no marketing: 30 sitios web de alto rendimiento. Gabriel Delgado. Pre-calificación técnica y contacto directo.'
+  'Ingeniería aplicada al desarrollo web de alto rendimiento. Proyecto 3000 — Gabriel Delgado. Requerimientos, alcance y contacto profesional.'
 
 export function MisionCelia() {
   const [formCompleted, setFormCompleted] = useState(false)
@@ -16,18 +16,14 @@ export function MisionCelia() {
     description: PAGE_DESCRIPTION,
   })
 
-  return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-coach-700 via-coach-800 to-coach-900 py-4 sm:py-8 md:py-10">
-      <div
-        className="pointer-events-none fixed inset-0 opacity-100"
-        style={{
-          background: 'radial-gradient(circle at 20% 80%, rgba(25, 118, 210, 0.12) 0%, transparent 55%)',
-        }}
-        aria-hidden
-      />
+  const cuposActivos = 3
+  const cuposTotal = 30
+  const cuposPct = Math.min(100, Math.round((cuposActivos / cuposTotal) * 100))
 
+  return (
+    <div className="relative min-h-screen overflow-x-hidden bg-white py-4 sm:py-8 md:py-10">
       <div className="relative z-10 mx-auto w-full max-w-[720px] px-3 sm:px-4">
-        <div className="animate-fade-in-up overflow-hidden rounded-[28px] border border-white/10 bg-white shadow-coach-card">
+        <div className="animate-fade-in-up overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-coach-card">
           {!formCompleted && (
           <header className="relative overflow-hidden bg-gradient-to-br from-coach-900 to-coach-800 px-4 py-8 text-center text-white sm:px-8 sm:py-10">
             <div
@@ -36,21 +32,32 @@ export function MisionCelia() {
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")`,
               }}
             />
-            <div className="relative z-10">
+            <div className="relative z-10 space-y-3">
+              <p className="font-display text-[0.7rem] font-black uppercase tracking-[0.25em] text-amber-200/95 sm:text-xs">
+                Proyecto 3000
+              </p>
+              <p className="mx-auto max-w-md font-display text-xs font-bold uppercase tracking-wide text-white/90 sm:text-sm">
+                Formulario de requerimientos web
+              </p>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/75">Gabriel Delgado</p>
-              <h1 className="mt-3 font-display text-2xl font-black leading-tight tracking-tight sm:text-[1.65rem]">
+              <h1 className="font-display text-2xl font-black leading-tight tracking-tight sm:text-[1.65rem]">
                 Ingeniería con{' '}
                 <span className="bg-gradient-to-r from-amber-200 via-amber-300 to-orange-300 bg-clip-text text-transparent">
                   Propósito
                 </span>
                 : 30 Sitios de Élite
               </h1>
-              <p className="mx-auto mt-3 max-w-md text-sm font-medium text-white/90">
+              <p className="mx-auto max-w-md text-sm font-medium text-white/90">
                 30 Sitios de Élite · Una iniciativa de Gabriel Delgado para una causa familiar
               </p>
-              <div className="mx-auto mt-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur-md">
-                <Zap className="h-4 w-4 text-amber-300" />
-                No es marketing, es ingeniería real
+              <div className="mx-auto mt-2 inline-flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur-md">
+                  <Zap className="h-4 w-4 text-amber-300" />
+                  No es marketing, es ingeniería real
+                </span>
+                <span className="rounded-full bg-amber-400/25 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-amber-100 ring-1 ring-amber-300/40">
+                  Proyecto 3000
+                </span>
               </div>
             </div>
           </header>
@@ -62,24 +69,28 @@ export function MisionCelia() {
                 <Target className="mt-0.5 h-8 w-8 shrink-0 text-amber-500" strokeWidth={1.75} />
                 <div>
                   <p>
-                    <strong className="text-alert">Esta iniciativa tiene un solo objetivo:</strong> financiar mediante mi trabajo profesional una intervención
-                    médica urgente para mi abuela. Cada línea de código y cada arquitectura desplegada se traduce en salud para mi familia.
+                    <strong className="text-alert">Propósito de esta iniciativa:</strong> orientar los ingresos de mi actividad profesional hacia una
+                    intervención médica prioritaria para mi abuela. Cada encargo técnico asumido representa, para mi familia, un aporte concreto a su
+                    atención de salud.
                   </p>
                   <p className="mt-2 text-slate-700">
-                    Busco <strong className="text-coach-900">30 clientes</strong> que valoren el compromiso de un ingeniero que trabaja por lo más importante.
+                    Por ello ofrezco un máximo de <strong className="text-coach-900">treinta plazas</strong>, con el rigor, la claridad y el respeto que
+                    merece quien confía la presencia digital de su organización o proyecto personal.
                   </p>
                 </div>
               </div>
 
               <p className="mt-5 text-sm leading-relaxed text-slate-700 sm:text-base">
-                Estoy abriendo <strong className="text-coach-900">30 cupos exclusivos</strong> para sitios web de alto rendimiento, optimizados para conversión y
-                velocidad extrema. Si tu proyecto encaja, hablemos.
+                En el marco del <strong className="text-coach-900">Proyecto 3000</strong> desarrollo sitios web de alto rendimiento, con foco en velocidad de
+                carga, accesibilidad y experiencia orientada a resultados. Las plazas son deliberadamente limitadas para mantener un acompañamiento técnico
+                cercano y responsable en cada caso.
               </p>
 
               <div className="mt-5 grid gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-slate-200 bg-slate-50/90 py-3 text-center">
                   <p className="font-display text-xl font-extrabold text-coach-900">
-                    2<span className="text-sm font-bold text-coach-600">/30</span>
+                    {cuposActivos}
+                    <span className="text-sm font-bold text-coach-600">/{cuposTotal}</span>
                   </p>
                   <p className="mt-1 text-[0.65rem] font-bold uppercase tracking-wide text-slate-500">Proyectos activos</p>
                 </div>
@@ -97,8 +108,26 @@ export function MisionCelia() {
                 </div>
               </div>
 
-              <p className="mt-5 rounded-lg border border-coach-100 bg-white px-3 py-2 text-center text-xs text-slate-600">
-                El formulario es la <strong className="text-coach-800">pre-calificación técnica</strong>: paso a paso, sin perder tu tiempo ni el mío.
+              <div className="mt-5 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3">
+                <div className="mb-2 flex items-center justify-between text-xs font-semibold text-slate-600">
+                  <span>Ocupación Proyecto 3000</span>
+                  <span className="tabular-nums text-coach-900">
+                    {cuposActivos} / {cuposTotal} proyectos
+                  </span>
+                </div>
+                <div className="h-3 overflow-hidden rounded-full bg-slate-200" role="progressbar" aria-valuenow={cuposActivos} aria-valuemin={0} aria-valuemax={cuposTotal}>
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-coach-600 to-coach-900 transition-[width] duration-700 ease-out"
+                    style={{ width: `${cuposPct}%` }}
+                  />
+                </div>
+                <p className="mt-1.5 text-center text-[0.65rem] text-slate-500">Cupos en curso respecto a los 30 disponibles</p>
+              </div>
+
+              <p className="mt-5 rounded-lg border border-coach-100 bg-slate-50/90 px-4 py-3 text-center text-xs leading-relaxed text-slate-600 sm:text-sm">
+                El formulario siguiente recoge, por etapas breves, los{' '}
+                <strong className="text-coach-800">requerimientos técnicos y de diseño</strong> necesarios para evaluar el alcance con criterio profesional y
+                responder con una propuesta fundamentada.
               </p>
             </div>
           )}

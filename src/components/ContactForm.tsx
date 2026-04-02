@@ -1,13 +1,16 @@
 import { FormEvent, type ReactNode, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { cn } from '@/utils/cn'
+import type { LucideIcon } from 'lucide-react'
 import {
   Briefcase,
   Building2,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
+  Gem,
   Globe,
+  LayoutTemplate,
   Mail,
   MapPin,
   Palette,
@@ -30,37 +33,73 @@ const ACTIVITY_OPTIONS = [
   'Negocio Local (Restaurante, Estética, Taller)',
 ] as const
 
-const ACTIVITY_PILLS: { value: (typeof ACTIVITY_OPTIONS)[number]; short: string; Icon: typeof Briefcase }[] = [
-  { value: ACTIVITY_OPTIONS[0], short: 'Servicios profesionales', Icon: Briefcase },
-  { value: ACTIVITY_OPTIONS[1], short: 'Venta de productos', Icon: ShoppingBag },
-  { value: ACTIVITY_OPTIONS[2], short: 'Negocio local', Icon: MapPin },
-]
-
-const VISUAL_STYLE_OPTIONS = [
-  'Audaz y Moderno: (Fuertes contrastes, tipografías grandes, ideal para Tech/Agencias).',
-  'Contemporáneo y Limpio: (Minimalismo tipo Apple, mucho aire, ideal para Servicios/Salud).',
-  'Clásico y Conservador: (Elegancia sobria, fuentes con serifa, ideal para Legal/Finanzas).',
-] as const
-
-const VISUAL_PRESETS: {
-  value: (typeof VISUAL_STYLE_OPTIONS)[number]
-  title: string
-  hint: string
+const ACTIVITY_PILLS: {
+  value: (typeof ACTIVITY_OPTIONS)[number]
+  short: string
+  Icon: LucideIcon
+  pillClass: string
 }[] = [
   {
-    value: VISUAL_STYLE_OPTIONS[0],
-    title: 'Audaz y Moderno',
-    hint: 'Fuertes contrastes, tipografías grandes · ideal para Tech/Agencias',
+    value: ACTIVITY_OPTIONS[0],
+    short: 'Servicios profesionales',
+    Icon: Briefcase,
+    pillClass:
+      'bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 shadow-md shadow-blue-900/25',
   },
   {
-    value: VISUAL_STYLE_OPTIONS[1],
-    title: 'Contemporáneo y Limpio',
-    hint: 'Minimalismo tipo Apple · ideal para Servicios/Salud',
+    value: ACTIVITY_OPTIONS[1],
+    short: 'Venta de productos',
+    Icon: ShoppingBag,
+    pillClass:
+      'bg-gradient-to-br from-emerald-500 via-teal-600 to-teal-900 shadow-md shadow-teal-900/25',
   },
   {
-    value: VISUAL_STYLE_OPTIONS[2],
-    title: 'Clásico y Conservador',
-    hint: 'Elegancia sobria, serifa · ideal para Legal/Finanzas',
+    value: ACTIVITY_OPTIONS[2],
+    short: 'Negocio local',
+    Icon: MapPin,
+    pillClass:
+      'bg-gradient-to-br from-orange-500 via-rose-500 to-rose-700 shadow-md shadow-rose-900/20',
+  },
+]
+
+const VISUAL_PRESET_LIST: {
+  value: string
+  title: string
+  hint: string
+  Icon: LucideIcon
+  swatches: readonly string[]
+}[] = [
+  {
+    value:
+      'Moderno / Minimalista: mucho espacio en blanco, tipografía sans clara, paleta neutra con un acento; ideal para SaaS y portafolios.',
+    title: 'Moderno / Minimalista',
+    hint: 'Mucho espacio en blanco, tipografía sans clara · ideal para SaaS y portafolios',
+    Icon: LayoutTemplate,
+    swatches: ['#ffffff', '#f1f5f9', '#64748b', '#0f172a'],
+  },
+  {
+    value:
+      'Corporativo / Profesional: estructura clara, azules y grises, bloques ordenados; ideal para consultoría y B2B.',
+    title: 'Corporativo / Profesional',
+    hint: 'Estructura clara, azules y grises · ideal para consultoría y B2B',
+    Icon: Building2,
+    swatches: ['#0f172a', '#1e3a5f', '#3b82f6', '#e2e8f0'],
+  },
+  {
+    value:
+      'Creativo / Impactante: contraste alto, acentos vivos, formas y módulos llamativos; ideal para marcas jóvenes y cultura.',
+    title: 'Creativo / Impactante',
+    hint: 'Contraste alto, acentos vivos · ideal para marcas jóvenes y cultura',
+    Icon: Zap,
+    swatches: ['#7c3aed', '#ec4899', '#fbbf24', '#06b6d4'],
+  },
+  {
+    value:
+      'Elegante / Sofisticado: tonos profundos, detalles finos, serifas o tipografía refinada; ideal para legal, finanzas y lujo.',
+    title: 'Elegante / Sofisticado',
+    hint: 'Tonos profundos, detalles finos · ideal para legal, finanzas y lujo',
+    Icon: Gem,
+    swatches: ['#1c1917', '#44403c', '#d4af37', '#faf8f5'],
   },
 ]
 
@@ -74,19 +113,40 @@ function Helper({ children }: { children: ReactNode }) {
   return <p className="mt-1 text-xs text-slate-500">{children}</p>
 }
 
+function ColorSwatches({ colors, labelClass }: { colors: readonly string[]; labelClass: string }) {
+  return (
+    <div className="mt-2 flex flex-wrap items-center gap-2">
+      <span className={cn('text-[10px] font-bold uppercase tracking-wider', labelClass)}>Paleta</span>
+      <div className="flex flex-wrap gap-1" role="list" aria-label="Colores de referencia">
+        {colors.map((c) => (
+          <span
+            key={c}
+            role="listitem"
+            className="h-4 w-4 shrink-0 rounded-full border border-black/20 shadow-sm ring-1 ring-white/40"
+            style={{ backgroundColor: c }}
+            title={c}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function SectorGuide() {
   return (
     <div className="mt-2 rounded-lg border border-slate-100 bg-slate-50 p-3 text-xs text-slate-500">
-      <p className="font-semibold text-slate-600">💡 Guía rápida para elegir:</p>
+      <p className="font-semibold text-slate-600">Guía orientativa por tipo de actividad</p>
       <ul className="mt-2 list-none space-y-2 pl-0">
         <li>
-          <strong className="text-slate-700">Servicios Profesionales:</strong> Si vendes tu conocimiento (Abogados, Médicos, Coaches, Agencias, Freelance).
+          <strong className="text-slate-700">Servicios profesionales:</strong> asesoría, salud, formación, agencias o trabajo independiente basado en
+          conocimiento especializado.
         </li>
         <li>
-          <strong className="text-slate-700">Venta de Productos:</strong> Inventario físico o digital (tiendas, gadgets, cursos).
+          <strong className="text-slate-700">Venta de productos:</strong> catálogo, comercio electránico o oferta de bienes digitales.
         </li>
         <li>
-          <strong className="text-slate-700">Negocio Local:</strong> Punto físico y atención directa (restaurantes, talleres, estéticas, clínicas).
+          <strong className="text-slate-700">Negocio local:</strong> establecimiento con atención presencial o mixta (restauración, talleres, estética,
+          servicios de proximidad).
         </li>
       </ul>
     </div>
@@ -136,9 +196,9 @@ function ReservationFicha({ clientName, businessName }: { clientName: string; bu
             Resumen de solicitud
           </p>
           <p className="mt-4 text-base leading-relaxed text-slate-800">
-            Hola <strong className="text-coach-900">{clientName}</strong>, he recibido tus datos para{' '}
-            <strong className="text-coach-900">{businessName}</strong>. Para asegurar tu cupo de los{' '}
-            <strong>30 disponibles</strong> y congelar el precio de <strong>$99</strong>, realiza el pago y adjunta el comprobante.
+            Hola <strong className="text-coach-900">{clientName}</strong>, he recibido sus datos relativos a{' '}
+            <strong className="text-coach-900">{businessName}</strong>. Para asegurar su cupo entre los{' '}
+            <strong>30 disponibles</strong> y congelar el precio de <strong>$99</strong>, solicito realizar el pago y adjuntar el comprobante.
           </p>
         </div>
 
@@ -186,7 +246,7 @@ function ReservationFicha({ clientName, businessName }: { clientName: string; bu
           Enviar comprobante por WhatsApp (+58 412 356 3070)
         </a>
         <p className="border-t border-slate-200 pt-4 text-center text-xs text-slate-500">
-          El mensaje ya incluye Zelle (Sandra) y Binance (Gabriel). Adjunta tu capture de pago antes de enviar.
+          El mensaje ya incluye los datos de Zelle (Sandra) y Binance (Gabriel). Adjunte la captura del pago antes de enviar.
         </p>
       </div>
     </div>
@@ -313,12 +373,19 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
   return (
     <div className="animate-fade-in-up">
       <div className="border-b border-slate-100 px-4 pb-4 pt-2 sm:px-8 sm:pt-4">
-        <div className="mb-3 flex items-center gap-2 font-display text-base font-bold text-coach-900">
-          <Sparkles className="h-5 w-5 text-coach-600" />
-          Pre-calificación técnica
+        <div className="mb-3 flex flex-col gap-0.5 font-display text-coach-900 sm:flex-row sm:items-center sm:gap-2">
+          <span className="flex items-center gap-2 text-base font-bold">
+            <Sparkles className="h-5 w-5 shrink-0 text-coach-600" />
+            Proyecto 3000
+          </span>
+          <span className="hidden text-slate-300 sm:inline">·</span>
+          <span className="text-sm font-semibold text-slate-600 sm:text-base sm:font-bold sm:text-coach-900">
+            Formulario de requerimientos web
+          </span>
         </div>
         <p className="text-sm leading-relaxed text-slate-600">
-          Unos datos concretos bastan para ver si tu proyecto encaja. Avanza paso a paso; te escribo por correo o WhatsApp con el siguiente paso.
+          Cada paso documenta aspectos concretos de su solicitud. Puede avanzar con calma; una vez enviado el formulario, me comunicaré por correo electrónico
+          o WhatsApp para los trámites posteriores, en un plazo razonable.
         </p>
 
         <div className="mt-4 flex gap-1">
@@ -347,7 +414,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               <div>
                 <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700">
                   <User className="h-4 w-4 text-coach-700" />
-                  ¿Cómo te llamas?
+                  Nombre de contacto
                 </label>
                 <div className="relative">
                   <FieldIcon Icon={User} />
@@ -358,7 +425,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                     autoComplete="name"
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
-                    placeholder="Tu nombre"
+                    placeholder="Nombre completo"
                     className={inputShell}
                   />
                 </div>
@@ -366,7 +433,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               <div>
                 <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700">
                   <Building2 className="h-4 w-4 text-coach-700" />
-                  Nombre de tu empresa o proyecto
+                  Empresa, marca o proyecto
                 </label>
                 <div className="relative">
                   <FieldIcon Icon={Building2} />
@@ -389,27 +456,30 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <div>
               <label className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
                 <Briefcase className="h-4 w-4 text-coach-700" />
-                ¿A qué se dedica tu negocio?
+                Actividad principal del negocio
               </label>
               <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-                {ACTIVITY_PILLS.map(({ value, short, Icon }) => (
+                {ACTIVITY_PILLS.map(({ value, short, Icon, pillClass }) => (
                   <button
                     key={value}
                     type="button"
                     onClick={() => setActivity(value)}
                     className={cn(
-                      'flex min-w-[140px] flex-1 items-center gap-2 rounded-full border-2 px-4 py-3 text-left text-sm font-medium transition-all',
+                      'flex min-w-[140px] flex-1 items-center gap-2.5 rounded-full px-4 py-3 text-left text-sm font-semibold text-white transition-all',
+                      pillClass,
                       activity === value
-                        ? 'border-coach-900 bg-coach-700 text-white shadow-coach-sm'
-                        : 'border-transparent bg-slate-100 text-slate-800 hover:-translate-y-0.5 hover:bg-slate-200'
+                        ? 'ring-4 ring-coach-900 ring-offset-2 ring-offset-white'
+                        : 'opacity-[0.92] hover:-translate-y-0.5 hover:opacity-100 hover:brightness-105'
                     )}
                   >
-                    <Icon className="h-4 w-4 shrink-0" />
+                    <Icon className="h-5 w-5 shrink-0 text-white" strokeWidth={2.25} aria-hidden />
                     {short}
                   </button>
                 ))}
               </div>
-              <Helper>Esto me ayuda a elegir la arquitectura de carga (SSG o Dinámica) más eficiente para ti.</Helper>
+              <Helper>
+                Permite orientar la arquitectura de publicación (estática o dinámica) de forma acorde al tipo de contenido y actualizaciones previstas.
+              </Helper>
               <SectorGuide />
             </div>
           )}
@@ -418,7 +488,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <div>
               <label className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700" htmlFor="value_proposition">
                 <Target className="h-4 w-4 text-coach-700" />
-                ¿Cuál es el objetivo principal de tu nueva web?
+                Objetivo principal del sitio web
               </label>
               <textarea
                 id="value_proposition"
@@ -430,7 +500,9 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 className={cn(inputShell, 'min-h-[120px] resize-y py-3 pl-4')}
                 placeholder="Ej. captar leads, vender online, reservas, credibilidad profesional…"
               />
-              <Helper>Sé específico: ¿Quieres captar leads, vender productos o marca personal?</Helper>
+              <Helper>
+                Conviene precisar si la prioridad es captación de contactos, venta en línea, reservas, credibilidad institucional u otro fin medible.
+              </Helper>
             </div>
           )}
 
@@ -438,7 +510,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <div>
               <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700" htmlFor="identity_references">
                 <Globe className="h-4 w-4 text-coach-700" />
-                ¿Tienes una web actual, referencia o nombre ideal para tu dominio?{' '}
+                Sitio web actual, referencia visual o nombre de dominio deseado{' '}
                 <span className="text-xs font-normal text-slate-400">(opcional)</span>
               </label>
               <div className="relative">
@@ -454,7 +526,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 />
               </div>
               <Helper>
-                Dime si ya tienes una página, algún sitio que te guste como referencia o simplemente el nombre que sueñas para tu dirección web.
+                Puede indicar una URL vigente, un sitio de referencia o la denominación prevista para el dominio, si ya la tiene definida.
               </Helper>
             </div>
           )}
@@ -463,29 +535,45 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <div>
               <label className="mb-3 flex items-center gap-2 text-sm font-semibold text-slate-700">
                 <Palette className="h-4 w-4 text-coach-700" />
-                ¿Qué personalidad visual buscas para tu sitio?
+                Personalidad visual deseada para el sitio
               </label>
               <div className="grid gap-3 sm:grid-cols-1">
-                {VISUAL_PRESETS.map(({ value, title, hint }) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => setVisualStyle(value)}
-                    className={cn(
-                      'rounded-2xl border-2 p-4 text-left transition-all',
-                      visualStyle === value
-                        ? 'border-coach-900 bg-coach-700 text-white shadow-coach-sm'
-                        : 'border-transparent bg-slate-100 text-slate-800 hover:-translate-y-0.5 hover:bg-slate-200'
-                    )}
-                  >
-                    <span className="font-display block text-sm font-bold">{title}</span>
-                    <span className={cn('mt-1 block text-xs', visualStyle === value ? 'text-white/90' : 'text-slate-600')}>
-                      {hint}
-                    </span>
-                  </button>
-                ))}
+                {VISUAL_PRESET_LIST.map(({ value, title, hint, Icon, swatches }) => {
+                  const selected = visualStyle === value
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => setVisualStyle(value)}
+                      className={cn(
+                        'rounded-2xl border-2 p-4 text-left transition-all',
+                        selected
+                          ? 'border-coach-900 bg-coach-700 text-white shadow-coach-sm'
+                          : 'border-transparent bg-slate-100 text-slate-800 hover:-translate-y-0.5 hover:bg-slate-200'
+                      )}
+                    >
+                      <div className="flex items-start gap-3">
+                        <Icon
+                          className={cn('mt-0.5 h-6 w-6 shrink-0', selected ? 'text-white' : 'text-coach-700')}
+                          strokeWidth={2}
+                          aria-hidden
+                        />
+                        <div className="min-w-0 flex-1">
+                          <span className="font-display block text-sm font-bold">{title}</span>
+                          <span className={cn('mt-1 block text-xs', selected ? 'text-white/90' : 'text-slate-600')}>
+                            {hint}
+                          </span>
+                          <ColorSwatches
+                            colors={swatches}
+                            labelClass={selected ? 'text-white/75' : 'text-slate-500'}
+                          />
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
               </div>
-              <Helper>Esto define la tipografía, los colores y la fuerza del diseño.</Helper>
+              <Helper>Orientación para tipografía, paleta cromática y intensidad visual del diseño propuesto.</Helper>
             </div>
           )}
 
@@ -532,7 +620,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                     className={inputShell}
                   />
                 </div>
-                <Helper>Te escribiré personalmente para coordinar el despliegue técnico.</Helper>
+                <Helper>Me pondré en contacto para coordinar el despliegue técnico según lo acordado.</Helper>
               </div>
 
               <div className="rounded-xl bg-slate-50 py-3 text-center">
@@ -550,7 +638,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               </div>
 
               <p className="rounded-xl border border-coach-100 bg-coach-light/50 px-3 py-3 text-center text-xs font-semibold leading-relaxed text-coach-900 sm:text-sm">
-                Recordatorio: Tu sitio será entregado en un bloque de <strong>48 a 72 horas</strong> tras la confirmación del pago.
+                Recordatorio: la entrega del sitio se contempla en un intervalo de <strong>48 a 72 horas</strong> una vez confirmado el pago.
               </p>
             </div>
           )}
