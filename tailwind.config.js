@@ -63,12 +63,17 @@ export default {
       },
       boxShadow: {
         coach: '0 10px 30px rgba(0,0,0,0.2)',
+        'coach-card': '0 25px 50px -12px rgba(0, 0, 0, 0.2)',
         'coach-sm': '0 2px 4px rgba(0,0,0,0.1)',
         'coach-md': '0 4px 8px rgba(0,0,0,0.1)',
+        'coach-btn': '0 8px 20px rgba(25, 118, 210, 0.25)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
+        'fade-in-up': 'fadeInUp 0.45s ease-out both',
+        'step-in': 'stepIn 0.35s ease-out both',
+        shake: 'shake 0.35s ease',
       },
       keyframes: {
         fadeIn: {
@@ -78,6 +83,19 @@ export default {
         slideUp: {
           '0%': { transform: 'translateY(10px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(14px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        stepIn: {
+          '0%': { opacity: '0', transform: 'translateX(10px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-4px)' },
+          '75%': { transform: 'translateX(4px)' },
         },
       },
     },
