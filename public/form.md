@@ -83,7 +83,7 @@
         }
 
         .form-header h1 span {
-            background: linear-gradient(135deg, #ffd966, #ffb347);
+            background: linear-gradient(135deg, #bae6fd, #93c5fd, #60a5fa);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -111,7 +111,7 @@
         /* Caja de propósito */
         .purpose-box {
             background: #e3f2fd;
-            border-left: 5px solid #ffb347;
+            border-left: 5px solid #1976d2;
             padding: 1rem 1.2rem;
             margin: 1.5rem 2rem 0;
             border-radius: 0 12px 12px 0;
@@ -128,7 +128,7 @@
         }
 
         .purpose-box strong {
-            color: #d32f2f;
+            color: #1565c0;
         }
 
         /* Stats */
@@ -242,13 +242,13 @@
         }
 
         .form-input.error, .form-textarea.error {
-            border-color: #d32f2f;
-            background: #fff5f5;
+            border-color: #1976d2;
+            background: #f0f9ff;
         }
 
         .form-input.success {
-            border-color: #00c853;
-            background: #f0fdf4;
+            border-color: #1565c0;
+            background: #e3f2fd;
         }
 
         .validation-message {
@@ -258,7 +258,7 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
-            color: #d32f2f;
+            color: #1565c0;
         }
 
         /* Radio group */
@@ -554,17 +554,17 @@
 
         /* Instrucciones de pago */
         .payment-section {
-            background: linear-gradient(135deg, #fff9e6, #fff3d6);
+            background: linear-gradient(135deg, #e3f2fd, #f0f9ff);
             border-radius: 20px;
             padding: 1.2rem;
             margin-bottom: 1.5rem;
-            border: 1px solid #ffd966;
+            border: 1px solid #bbdefb;
         }
 
         .payment-title {
             font-weight: 800;
             font-size: 1rem;
-            color: #d32f2f;
+            color: #0d47a1;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -676,24 +676,23 @@
                 <lord-icon
                     src="https://cdn.lordicon.com/hqymfzvj.json"
                     trigger="loop"
-                    colors="primary:#ffffff,secondary:#ffb347"
+                    colors="primary:#ffffff,secondary:#7dd3fc"
                     style="width:70px;height:70px">
                 </lord-icon>
             </div>
             <h1>Ingeniería con <span>Propósito</span></h1>
             <p>30 Sitios de Élite · Una iniciativa de Gabriel Delgado para una causa familiar</p>
             <div class="availability-badge">
-                <lord-icon src="https://cdn.lordicon.com/lupbrghs.json" trigger="loop" colors="primary:#ffb347" style="width:18px;height:18px"></lord-icon>
-                <span>No es marketing, es ingeniería real</span>
+                <lord-icon src="https://cdn.lordicon.com/lupbrghs.json" trigger="loop" colors="primary:#7dd3fc" style="width:18px;height:18px"></lord-icon>
+                <span>Ingeniería al alcance de tu mano</span>
             </div>
         </div>
 
         <div class="purpose-box">
-            <lord-icon src="https://cdn.lordicon.com/yaogxvnw.json" trigger="loop" colors="primary:#ffb347" style="width:36px;height:36px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/yaogxvnw.json" trigger="loop" colors="primary:#1976d2" style="width:36px;height:36px"></lord-icon>
             <div>
-                <strong>🎯 Propósito de esta iniciativa:</strong> orientar los ingresos de mi actividad profesional hacia una intervención médica prioritaria para mi abuela.<br>
-                Cada encargo técnico asumido representa, para mi familia, un aporte concreto a su atención de salud.<br>
-                <strong style="margin-top: 6px; display: inline-block;">Ofrezco un máximo de treinta plazas, con el rigor y el respeto que merece quien confía la presencia digital de su organización o proyecto.</strong>
+                <strong>Iniciativa:</strong> parte de los ingresos se destina a una intervención médica prioritaria para mi abuela; cada encargo contribuye a esa atención.<br>
+                <strong style="margin-top: 6px; display: inline-block;">Hasta treinta plazas, con el mismo cuidado técnico para quien delega su presencia en la web.</strong>
             </div>
         </div>
 
@@ -718,7 +717,7 @@
                 Requerimientos del proyecto
             </div>
             <p style="font-size: 0.8rem; color: #475569; margin-bottom: 1.5rem;">
-                Cada paso documenta aspectos de su solicitud. Puede avanzar con calma; al enviar el formulario, recibirá contacto por correo o WhatsApp para los trámites posteriores.
+                Datos por pasos. Tras el envío, contacto por correo o WhatsApp.
             </p>
 
             <form id="leadForm">
@@ -1047,7 +1046,7 @@
                         <lord-icon
                             src="https://cdn.lordicon.com/lupuorrc.json"
                             trigger="loop"
-                            colors="primary:#ffffff,secondary:#00c853"
+                            colors="primary:#ffffff,secondary:#7dd3fc"
                             style="width:70px;height:70px">
                         </lord-icon>
                     </div>
@@ -1057,7 +1056,7 @@
 
                 <div class="confirmation-screen">
                     <div class="success-icon">
-                        <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" colors="primary:#00c853" style="width:80px;height:80px"></lord-icon>
+                        <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop" colors="primary:#1976d2" style="width:80px;height:80px"></lord-icon>
                     </div>
                     
                     <div class="confirmation-title">Ficha de reserva · Proyecto 3000</div>
@@ -1080,7 +1079,7 @@
 
                     <div class="payment-section">
                         <div class="payment-title">
-                            <lord-icon src="https://cdn.lordicon.com/hbvgknxo.json" trigger="loop" colors="primary:#d32f2f" style="width:24px;height:24px"></lord-icon>
+                            <lord-icon src="https://cdn.lordicon.com/hbvgknxo.json" trigger="loop" colors="primary:#1976d2" style="width:24px;height:24px"></lord-icon>
                             💰 Para asegurar tu cupo de los 30 disponibles y congelar el precio de $99, realiza el pago y adjunta el comprobante.
                         </div>
 

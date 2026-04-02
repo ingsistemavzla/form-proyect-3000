@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ContactForm } from '@/components/ContactForm'
 import { useMetaTags } from '@/hooks/useMetaTags'
 import { cn } from '@/utils/cn'
-import { Crosshair, Target, Zap } from 'lucide-react'
+import { Crosshair, Hand, Target, Zap } from 'lucide-react'
 
 const PAGE_TITLE = 'Gabriel Delgado | Consultoría de Software de Alto Rendimiento'
 const PAGE_DESCRIPTION =
@@ -33,7 +33,7 @@ export function MisionCelia() {
               }}
             />
             <div className="relative z-10 space-y-3">
-              <p className="font-display text-[0.7rem] font-black uppercase tracking-[0.25em] text-amber-200/95 sm:text-xs">
+              <p className="font-display text-[0.7rem] font-black uppercase tracking-[0.25em] text-sky-200/95 sm:text-xs">
                 Proyecto 3000
               </p>
               <p className="mx-auto max-w-md font-display text-xs font-bold uppercase tracking-wide text-white/90 sm:text-sm">
@@ -42,7 +42,7 @@ export function MisionCelia() {
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/75">Gabriel Delgado</p>
               <h1 className="font-display text-2xl font-black leading-tight tracking-tight sm:text-[1.65rem]">
                 Ingeniería con{' '}
-                <span className="bg-gradient-to-r from-amber-200 via-amber-300 to-orange-300 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-sky-200 via-blue-200 to-coach-400 bg-clip-text text-transparent">
                   Propósito
                 </span>
                 : 30 Sitios de Élite
@@ -52,10 +52,10 @@ export function MisionCelia() {
               </p>
               <div className="mx-auto mt-2 inline-flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                 <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-xs font-semibold backdrop-blur-md">
-                  <Zap className="h-4 w-4 text-amber-300" />
-                  No es marketing, es ingeniería real
+                  <Hand className="h-4 w-4 text-sky-200" strokeWidth={2} />
+                  Ingeniería al alcance de tu mano
                 </span>
-                <span className="rounded-full bg-amber-400/25 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-amber-100 ring-1 ring-amber-300/40">
+                <span className="rounded-full bg-sky-400/20 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-sky-100 ring-1 ring-sky-300/45">
                   Proyecto 3000
                 </span>
               </div>
@@ -65,25 +65,22 @@ export function MisionCelia() {
 
           {!formCompleted && (
             <div className="border-b border-slate-100 px-4 py-5 sm:px-8">
-              <div className="flex items-start gap-3 rounded-r-xl border-l-[5px] border-amber-400 bg-coach-light py-3 pl-4 pr-3 text-sm font-medium leading-relaxed text-slate-800">
-                <Target className="mt-0.5 h-8 w-8 shrink-0 text-amber-500" strokeWidth={1.75} />
+              <div className="flex items-start gap-3 rounded-r-xl border-l-[5px] border-coach-500 bg-coach-light py-3 pl-4 pr-3 text-sm font-medium leading-relaxed text-slate-800">
+                <Target className="mt-0.5 h-8 w-8 shrink-0 text-coach-600" strokeWidth={1.75} />
                 <div>
                   <p>
-                    <strong className="text-alert">Propósito de esta iniciativa:</strong> orientar los ingresos de mi actividad profesional hacia una
-                    intervención médica prioritaria para mi abuela. Cada encargo técnico asumido representa, para mi familia, un aporte concreto a su
-                    atención de salud.
+                    <strong className="text-coach-800">Iniciativa:</strong> parte de los ingresos se destina a una intervención médica prioritaria para mi
+                    abuela; cada encargo contribuye a esa atención.
                   </p>
                   <p className="mt-2 text-slate-700">
-                    Por ello ofrezco un máximo de <strong className="text-coach-900">treinta plazas</strong>, con el rigor, la claridad y el respeto que
-                    merece quien confía la presencia digital de su organización o proyecto personal.
+                    <strong className="text-coach-900">Hasta treinta plazas</strong>, con el mismo cuidado técnico para quien delega su presencia en la web.
                   </p>
                 </div>
               </div>
 
               <p className="mt-5 text-sm leading-relaxed text-slate-700 sm:text-base">
-                En el marco del <strong className="text-coach-900">Proyecto 3000</strong> desarrollo sitios web de alto rendimiento, con foco en velocidad de
-                carga, accesibilidad y experiencia orientada a resultados. Las plazas son deliberadamente limitadas para mantener un acompañamiento técnico
-                cercano y responsable en cada caso.
+                <strong className="text-coach-900">Proyecto 3000:</strong> sitios de alto rendimiento (velocidad, accesibilidad, conversión). Cupos
+                acotados para dar seguimiento técnico a cada caso.
               </p>
 
               <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -96,7 +93,7 @@ export function MisionCelia() {
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-slate-50/90 py-3 text-center">
                   <p className="flex justify-center text-2xl">
-                    <Zap className="h-7 w-7 text-amber-500" />
+                    <Zap className="h-7 w-7 text-coach-600" />
                   </p>
                   <p className="mt-1 text-[0.65rem] font-bold uppercase tracking-wide text-slate-500">Velocidad extrema</p>
                 </div>
@@ -125,9 +122,8 @@ export function MisionCelia() {
               </div>
 
               <p className="mt-5 rounded-lg border border-coach-100 bg-slate-50/90 px-4 py-3 text-center text-xs leading-relaxed text-slate-600 sm:text-sm">
-                El formulario siguiente recoge, por etapas breves, los{' '}
-                <strong className="text-coach-800">requerimientos técnicos y de diseño</strong> necesarios para evaluar el alcance con criterio profesional y
-                responder con una propuesta fundamentada.
+                Formulario en pasos breves: <strong className="text-coach-800">requisitos técnicos y de diseño</strong> para definir alcance y enviarle una
+                propuesta.
               </p>
             </div>
           )}

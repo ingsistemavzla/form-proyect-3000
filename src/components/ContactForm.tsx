@@ -58,7 +58,7 @@ const ACTIVITY_PILLS: {
     short: 'Negocio local',
     Icon: MapPin,
     pillClass:
-      'bg-gradient-to-br from-orange-500 via-rose-500 to-rose-700 shadow-md shadow-rose-900/20',
+      'bg-gradient-to-br from-slate-600 via-coach-700 to-coach-900 shadow-md shadow-coach-900/25',
   },
 ]
 
@@ -135,7 +135,7 @@ function ColorSwatches({ colors, labelClass }: { colors: readonly string[]; labe
 function SectorGuide() {
   return (
     <div className="mt-2 rounded-lg border border-slate-100 bg-slate-50 p-3 text-xs text-slate-500">
-      <p className="font-semibold text-slate-600">Guía orientativa por tipo de actividad</p>
+      <p className="font-semibold text-coach-800">Guía por tipo de actividad</p>
       <ul className="mt-2 list-none space-y-2 pl-0">
         <li>
           <strong className="text-slate-700">Servicios profesionales:</strong> asesoría, salud, formación, agencias o trabajo independiente basado en
@@ -182,7 +182,7 @@ function ReservationFicha({ clientName, businessName }: { clientName: string; bu
       <header className="bg-gradient-to-br from-coach-900 to-coach-800 px-4 py-8 text-center text-white sm:px-6">
         <div className="mx-auto mb-3 flex justify-center">
           <div className="rounded-full bg-white/10 p-3 backdrop-blur-sm">
-            <CheckCircle2 className="h-14 w-14 text-emerald-300" strokeWidth={1.5} />
+            <CheckCircle2 className="h-14 w-14 text-sky-300" strokeWidth={1.5} />
           </div>
         </div>
         <p className="font-display text-lg font-extrabold sm:text-xl">Solicitud recibida — paso final para reserva</p>
@@ -202,9 +202,9 @@ function ReservationFicha({ clientName, businessName }: { clientName: string; bu
           </p>
         </div>
 
-        <div className="rounded-[20px] border border-amber-200/80 bg-gradient-to-br from-amber-50 to-amber-100/50 p-5">
-          <p className="flex items-center gap-2 font-display text-base font-extrabold text-alert">
-            <Sparkles className="h-5 w-5 shrink-0" />
+        <div className="rounded-[20px] border border-coach-100 bg-gradient-to-br from-coach-light to-sky-50/90 p-5">
+          <p className="flex items-center gap-2 font-display text-base font-extrabold text-coach-800">
+            <Sparkles className="h-5 w-5 shrink-0 text-coach-600" />
             Instrucciones de pago
           </p>
 
@@ -384,8 +384,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           </span>
         </div>
         <p className="text-sm leading-relaxed text-slate-600">
-          Cada paso documenta aspectos concretos de su solicitud. Puede avanzar con calma; una vez enviado el formulario, me comunicaré por correo electrónico
-          o WhatsApp para los trámites posteriores, en un plazo razonable.
+          Datos por pasos. Tras el envío, contacto por correo o WhatsApp.
         </p>
 
         <div className="mt-4 flex gap-1">
@@ -477,9 +476,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                   </button>
                 ))}
               </div>
-              <Helper>
-                Permite orientar la arquitectura de publicación (estática o dinámica) de forma acorde al tipo de contenido y actualizaciones previstas.
-              </Helper>
+              <Helper>Sirve para elegir arquitectura estática o dinámica según el contenido.</Helper>
               <SectorGuide />
             </div>
           )}
@@ -500,9 +497,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 className={cn(inputShell, 'min-h-[120px] resize-y py-3 pl-4')}
                 placeholder="Ej. captar leads, vender online, reservas, credibilidad profesional…"
               />
-              <Helper>
-                Conviene precisar si la prioridad es captación de contactos, venta en línea, reservas, credibilidad institucional u otro fin medible.
-              </Helper>
+              <Helper>Ej.: leads, ventas, reservas, imagen institucional u otro objetivo.</Helper>
             </div>
           )}
 
@@ -525,9 +520,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                   className={inputShell}
                 />
               </div>
-              <Helper>
-                Puede indicar una URL vigente, un sitio de referencia o la denominación prevista para el dominio, si ya la tiene definida.
-              </Helper>
+              <Helper>URL actual, referencia o nombre de dominio, si aplica.</Helper>
             </div>
           )}
 
@@ -573,7 +566,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                   )
                 })}
               </div>
-              <Helper>Orientación para tipografía, paleta cromática y intensidad visual del diseño propuesto.</Helper>
+              <Helper>Tipografía, color e intensidad visual del diseño.</Helper>
             </div>
           )}
 
@@ -596,8 +589,8 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                     placeholder="tu@correo.com"
                     className={cn(
                       inputShell,
-                      email && !emailOk(email) && 'border-alert/60 bg-red-50/50',
-                      emailOk(email) && 'border-solution/70 bg-emerald-50/30'
+                      email && !emailOk(email) && 'border-coach-500/70 bg-sky-50/80',
+                      emailOk(email) && 'border-coach-600/60 bg-coach-light/60'
                     )}
                   />
                 </div>
@@ -625,7 +618,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
               <div className="rounded-xl bg-slate-50 py-3 text-center">
                 <p className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600">
-                  <Zap className="h-4 w-4 text-amber-500" />
+                  <Zap className="h-4 w-4 text-coach-600" />
                   Completado
                   <span className="tabular-nums text-coach-800">{progressFill}%</span>
                 </p>
@@ -678,8 +671,8 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         </div>
 
         {status === 'error' && (
-          <p className="mt-4 text-center text-sm font-semibold text-alert" role="alert">
-            No se pudo enviar. Inténtalo de nuevo en unos minutos.
+          <p className="mt-4 text-center text-sm font-semibold text-coach-800" role="alert">
+            No se pudo enviar. Inténtelo de nuevo en unos minutos.
           </p>
         )}
 
