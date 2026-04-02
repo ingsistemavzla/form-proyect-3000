@@ -1,9 +1,10 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, type ReactNode, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { cn } from '@/utils/cn'
 
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xvzvqjbb'
+const WHATSAPP_NUMBER = '584123563070'
 
 const ACTIVITY_OPTIONS = [
   'Servicios Profesionales (Asesoría, Salud, Freelance)',
@@ -11,31 +12,119 @@ const ACTIVITY_OPTIONS = [
   'Negocio Local (Restaurante, Estética, Taller)',
 ] as const
 
+const TIMELINE_OPTIONS = ['7 días', '15 días', '30 días'] as const
+
 const fieldClass =
   'rounded-[12px] border-gray-300 shadow-sm transition-all hover:border-coach-500/40 focus:border-coach-700 focus:ring-coach-700'
+
+function Helper({ children }: { children: ReactNode }) {
+  return <p className="mt-1 text-xs text-slate-500">{children}</p>
+}
+
+function ReservationFicha({ clientName, businessName }: { clientName: string; businessName: string }) {
+  const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `Hola Gabriel, acabo de enviar mi solicitud para ${businessName}. Aquí tienes el comprobante de pago.`
+  )}`
+
+  return (
+    <div
+      className="overflow-hidden rounded-sm border-2 border-coach-900 bg-white shadow-coach"
+      role="status"
+      aria-live="polite"
+    >
+      <header className="border-b-2 border-coach-900 bg-coach-900 px-4 py-4 sm:px-6">
+        <p className="font-display text-center text-base font-bold tracking-wide text-white sm:text-lg">
+          ✅ Solicitud Recibida - Paso Final para Reserva
+        </p>
+        <p className="mt-1 text-center text-xs font-medium uppercase tracking-[0.12em] text-white/75">
+          Ficha de reserva · Proyecto 3000
+        </p>
+      </header>
+
+      <div className="space-y-6 border-b border-neutral-200 bg-neutral-50/40 px-4 py-6 sm:px-8 sm:py-8">
+        <div className="border-l-4 border-coach-700 bg-white py-3 pl-4 pr-3 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-wide text-coach-900">Resumen de solicitud</p>
+          <p className="mt-3 text-base leading-relaxed text-neutral-800">
+            Hola <strong className="text-coach-900">{clientName}</strong>, he recibido tus datos para{' '}
+            <strong className="text-coach-900">{businessName}</strong>. Para asegurar tu cupo de los{' '}
+            <strong>30 disponibles</strong> y congelar el precio de <strong>$99</strong>, realiza el pago y adjunta el comprobante.
+          </p>
+        </div>
+
+        <div>
+          <h3 className="mb-3 border-b border-coach-200 pb-2 font-display text-sm font-bold uppercase tracking-wider text-coach-900">
+            Instrucciones de pago
+          </h3>
+          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+            <div className="rounded-md border-2 border-neutral-300 bg-white p-4 shadow-sm">
+              <p className="font-display text-xs font-bold uppercase tracking-wider text-coach-800">Zelle</p>
+              <p className="mt-2 font-mono text-sm text-neutral-900 break-all">Sandryquezada@gmail.com</p>
+              <p className="mt-2 text-sm text-neutral-600">Sandra Quezada Da Silva</p>
+            </div>
+            <div className="rounded-md border-2 border-neutral-300 bg-white p-4 shadow-sm">
+              <p className="font-display text-xs font-bold uppercase tracking-wider text-coach-800">Binance</p>
+              <p className="mt-2 font-mono text-sm text-neutral-900 break-all">gabrieldelgado110@gmail.com</p>
+              <p className="mt-2 text-sm text-neutral-600">
+                User: <span className="font-mono">ingenierogd10</span>
+                <span className="mx-1 text-neutral-400">·</span>
+                UID: <span className="font-mono">336165001</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer className="bg-white px-4 py-6 sm:px-8">
+        <a
+          href={waHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            'font-display flex w-full items-center justify-center rounded-lg px-6 py-4 text-center text-base font-bold text-white shadow-coach-sm transition-all',
+            'bg-[#25D366] hover:bg-[#20BD5A] hover:shadow-coach-md hover:-translate-y-0.5',
+            'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366]'
+          )}
+        >
+          Enviar Comprobante por WhatsApp
+        </a>
+        <p className="mt-3 text-center text-xs text-slate-500">
+          Se abrirá WhatsApp con un mensaje prellenado; adjunta tu capture de pago antes de enviar.
+        </p>
+      </footer>
+    </div>
+  )
+}
 
 export function ContactForm() {
   const [clientName, setClientName] = useState('')
   const [businessName, setBusinessName] = useState('')
   const [activity, setActivity] = useState<string>('')
   const [valueProposition, setValueProposition] = useState('')
+  const [currentWebsite, setCurrentWebsite] = useState('')
+  const [timeline, setTimeline] = useState<string>('')
   const [email, setEmail] = useState('')
   const [whatsapp, setWhatsapp] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'error'>('idle')
   const [submitted, setSubmitted] = useState(false)
   const [successName, setSuccessName] = useState('')
+  const [successBusiness, setSuccessBusiness] = useState('')
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus('loading')
 
     const trimmedName = clientName.trim()
+    const trimmedBusiness = businessName.trim()
 
     const data = new FormData()
     data.append('client_name', trimmedName)
-    data.append('business_name', businessName.trim())
+    data.append('business_name', trimmedBusiness)
     data.append('activity', activity)
     data.append('value_proposition', valueProposition.trim())
+    if (currentWebsite.trim()) {
+      data.append('current_website', currentWebsite.trim())
+    }
+    data.append('timeline', timeline)
     data.append('email', email.trim())
     data.append('whatsapp', whatsapp.trim())
     data.append('_subject', 'Proyecto 3000 — Gabriel Delgado')
@@ -49,6 +138,7 @@ export function ContactForm() {
 
       if (res.status === 200 || res.ok) {
         setSuccessName(trimmedName)
+        setSuccessBusiness(trimmedBusiness)
         setSubmitted(true)
         setStatus('idle')
         return
@@ -60,18 +150,7 @@ export function ContactForm() {
   }
 
   if (submitted) {
-    return (
-      <div
-        className="rounded-[15px] border-2 border-[#00c853]/85 bg-gradient-to-br from-emerald-50/95 to-white p-6 shadow-coach-md sm:p-8 md:p-10"
-        role="status"
-        aria-live="polite"
-      >
-        <p className="mx-auto max-w-2xl text-center text-lg font-semibold leading-relaxed text-neutral-800 sm:text-xl">
-          ¡Gracias, {successName}! Tus datos han sido recibidos correctamente. Tu cupo para el Proyecto 3000 está pre-reservado. Me pondré en contacto contigo
-          por WhatsApp en breve para los detalles finales.
-        </p>
-      </div>
-    )
+    return <ReservationFicha clientName={successName} businessName={successBusiness} />
   }
 
   return (
@@ -133,6 +212,7 @@ export function ContactForm() {
               </option>
             ))}
           </select>
+          <Helper>Esto me ayuda a elegir la arquitectura de carga (SSG o Dinámica) más eficiente para ti.</Helper>
         </div>
 
         <div className="w-full">
@@ -153,6 +233,52 @@ export function ContactForm() {
             )}
             placeholder="Ej. captar leads, vender online, reservas, credibilidad profesional…"
           />
+          <Helper>Sé específico: ¿Quieres captar leads, vender productos o marca personal?</Helper>
+        </div>
+
+        <div className="w-full">
+          <label htmlFor="current_website" className="mb-1.5 block text-sm font-semibold text-neutral-800">
+            ¿Tienes sitio web actual? <span className="font-normal text-slate-500">(opcional)</span>
+          </label>
+          <Input
+            id="current_website"
+            name="current_website"
+            type="text"
+            placeholder="https://tu-sitio.com o déjalo vacío"
+            autoComplete="url"
+            value={currentWebsite}
+            onChange={(e) => setCurrentWebsite(e.target.value)}
+            className={fieldClass}
+          />
+          <Helper>Para analizar tu competencia y mejorar lo que ya tienes.</Helper>
+        </div>
+
+        <div className="w-full">
+          <label htmlFor="timeline" className="mb-1.5 block text-sm font-semibold text-neutral-800">
+            ¿En qué tiempo necesitas el sitio?
+          </label>
+          <select
+            id="timeline"
+            name="timeline"
+            required
+            value={timeline}
+            onChange={(e) => setTimeline(e.target.value)}
+            className={cn(
+              'w-full border bg-white px-4 py-2 text-neutral-800',
+              fieldClass,
+              'focus:outline-none focus:ring-2'
+            )}
+          >
+            <option value="" disabled>
+              Selecciona un plazo
+            </option>
+            {TIMELINE_OPTIONS.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt}
+              </option>
+            ))}
+          </select>
+          <Helper>Priorizo proyectos según urgencia y complejidad.</Helper>
         </div>
 
         <Input
@@ -167,17 +293,20 @@ export function ContactForm() {
           className={fieldClass}
         />
 
-        <Input
-          name="whatsapp"
-          type="tel"
-          label="WhatsApp"
-          placeholder="+58 412 0000000"
-          required
-          autoComplete="tel"
-          value={whatsapp}
-          onChange={(e) => setWhatsapp(e.target.value)}
-          className={fieldClass}
-        />
+        <div className="w-full">
+          <Input
+            name="whatsapp"
+            type="tel"
+            label="WhatsApp"
+            placeholder="+58 412 0000000"
+            required
+            autoComplete="tel"
+            value={whatsapp}
+            onChange={(e) => setWhatsapp(e.target.value)}
+            className={fieldClass}
+          />
+          <Helper>Te escribiré personalmente para coordinar el despliegue técnico.</Helper>
+        </div>
 
         <div className="flex flex-col gap-3 pt-2">
           <Button
