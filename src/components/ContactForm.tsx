@@ -109,6 +109,9 @@ Binance → gabrieldelgado110@gmail.com | User: ingenierogd10 | UID: 336165001`
 
 const emailOk = (v: string) => /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(v.trim())
 
+const objectiveWordCount = (v: string) => v.trim().split(/\s+/).filter(Boolean).length
+const objectiveOk = (v: string) => objectiveWordCount(v) >= 3
+
 function Helper({ children }: { children: ReactNode }) {
   return <p className="mt-1 text-xs text-slate-500">{children}</p>
 }
@@ -197,8 +200,9 @@ function ReservationFicha({ clientName, businessName }: { clientName: string; bu
           </p>
           <p className="mt-4 text-base leading-relaxed text-slate-800">
             Hola <strong className="text-coach-900">{clientName}</strong>, he recibido sus datos relativos a{' '}
-            <strong className="text-coach-900">{businessName}</strong>. Para asegurar su cupo entre los{' '}
-            <strong>30 disponibles</strong> y congelar el precio de <strong>$99</strong>, solicito realizar el pago y adjuntar el comprobante.
+            <strong className="text-coach-900">{businessName}</strong>. Puede realizar el pago de <strong>$99</strong> para asegurar su cupo entre los{' '}
+            <strong>30 disponibles</strong> y mantener este precio de oportunidad, mediante cualquiera de estos métodos. Cuando lo haya hecho, adjunte el
+            comprobante en imagen (captura de pantalla) usando el botón directo a WhatsApp.
           </p>
         </div>
 
@@ -272,13 +276,14 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false)
   const [successName, setSuccessName] = useState('')
   const [successBusiness, setSuccessBusiness] = useState('')
+  const [objectiveFieldError, setObjectiveFieldError] = useState(false)
 
   const progressFill = useMemo(() => {
     let done = 0
     if (clientName.trim().length >= 2) done++
     if (businessName.trim().length >= 2) done++
     if (activity) done++
-    if (valueProposition.trim().length >= 8) done++
+    if (objectiveOk(valueProposition)) done++
     if (visualStyle) done++
     if (emailOk(email)) done++
     if (whatsapp.trim().length >= 7) done++
@@ -297,7 +302,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       case 1:
         return !!activity
       case 2:
-        return valueProposition.trim().length >= 8
+        return objectiveOk(valueProposition)
       case 3:
         return true
       case 4:
@@ -311,9 +316,11 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
   function goNext() {
     if (!canAdvance(step)) {
+      if (step === 2) setObjectiveFieldError(true)
       triggerShake()
       return
     }
+    if (step === 2) setObjectiveFieldError(false)
     setStep((s) => Math.min(s + 1, TOTAL_STEPS - 1))
   }
 
@@ -493,11 +500,26 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 rows={5}
                 required
                 value={valueProposition}
-                onChange={(e) => setValueProposition(e.target.value)}
-                className={cn(inputShell, 'min-h-[120px] resize-y py-3 pl-4')}
+                onChange={(e) => {
+                  const v = e.target.value
+                  setValueProposition(v)
+                  if (objectiveOk(v)) setObjectiveFieldError(false)
+                }}
+                aria-invalid={objectiveFieldError}
+                className={cn(
+                  inputShell,
+                  'min-h-[120px] resize-y py-3 pl-4',
+                  objectiveFieldError && 'border-red-500 bg-red-50/40 focus:border-red-600 focus:ring-red-500/15'
+                )}
                 placeholder="Ej. captar leads, vender online, reservas, credibilidad profesional…"
               />
-              <Helper>Ej.: leads, ventas, reservas, imagen institucional u otro objetivo.</Helper>
+              {objectiveFieldError ? (
+                <p className="mt-2 text-sm font-semibold text-red-600" role="alert">
+                  Incluya una oración con al menos 3 palabras.
+                </p>
+              ) : (
+                <Helper>Escriba al menos tres palabras (por ejemplo: captar leads o vender online).</Helper>
+              )}
             </div>
           )}
 
