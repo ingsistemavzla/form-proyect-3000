@@ -372,7 +372,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
 
   return (
     <div className="animate-fade-in-up">
-      <div className="border-b border-slate-100 px-4 pb-4 pt-2 sm:px-8 sm:pt-4">
+      <div className="border-b border-slate-100 px-4 pb-4 pt-4 sm:px-8">
         <div className="mb-3 flex flex-col gap-0.5 font-display text-coach-900 sm:flex-row sm:items-center sm:gap-2">
           <span className="flex items-center gap-2 text-base font-bold">
             <Sparkles className="h-5 w-5 shrink-0 text-coach-600" />
